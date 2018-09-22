@@ -28,8 +28,9 @@ def find_duplicates(root_path):
 
 
 def print_duplicates(duplicates):
-    if len(duplicates) == 0:
+    if not duplicates:
         print("No duplicates found")
+        return
 
     for duplicate in duplicates.items():
         print(
@@ -46,8 +47,8 @@ if __name__ == "__main__":
         sys.exit("No filename argument")
 
     root_path = sys.argv[1]
-    if not os.path.exists(root_path):
-        sys.exit("No such path")
+    if not os.path.exists(root_path) or not os.path.isdir(root_path):
+        sys.exit("Input path is incorrect")
 
     duplicates = find_duplicates(root_path)
     print_duplicates(duplicates)

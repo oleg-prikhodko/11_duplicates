@@ -17,7 +17,10 @@ def find_duplicates(root_path):
             filepaths_by_file[file_on_disk].append(filepath)
 
     file_counter = Counter(files)
-    duplicates = filter(lambda item: item[1] > 1, file_counter.items())
+    duplicates = filter(
+        lambda frequency_by_file: frequency_by_file[1] > 1,
+        file_counter.items(),
+    )
     return {
         file_on_disk.name: filepaths_by_file[file_on_disk]
         for file_on_disk, _ in duplicates
@@ -27,7 +30,7 @@ def find_duplicates(root_path):
 def print_duplicates(duplicates):
     if len(duplicates) == 0:
         print("No duplicates found")
-        
+
     for duplicate in duplicates.items():
         print(
             "File '{}' appears {} times:".format(

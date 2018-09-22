@@ -1,7 +1,6 @@
 import os
 import sys
 from collections import Counter, defaultdict, namedtuple
-from pprint import pprint
 
 
 def find_duplicates(root_path):
@@ -25,5 +24,24 @@ def find_duplicates(root_path):
     }
 
 
+def print_duplicates(duplicates):
+    for duplicate in duplicates.items():
+        print(
+            "File '{}' appears {} times:".format(
+                duplicate[0], len(duplicate[1])
+            )
+        )
+        for filepath in duplicate[1]:
+            print("\t{}".format(filepath))
+
+
 if __name__ == "__main__":
-    pprint(find_duplicates(sys.argv[1]))
+    if len(sys.argv) < 2:
+        sys.exit("No filename argument")
+
+    root_path = sys.argv[1]
+    if not os.path.exists(root_path):
+        sys.exit("No such path")
+
+    duplicates = find_duplicates(root_path)
+    print_duplicates(duplicates)

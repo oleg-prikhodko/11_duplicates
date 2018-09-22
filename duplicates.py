@@ -25,6 +25,9 @@ def find_duplicates(root_path):
 
 
 def print_duplicates(duplicates):
+    if len(duplicates) == 0:
+        print("No duplicates found")
+        
     for duplicate in duplicates.items():
         print(
             "File '{}' appears {} times:".format(

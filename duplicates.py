@@ -1,10 +1,6 @@
 import os
 import sys
-from collections import defaultdict, namedtuple
-
-
-# Дубликаты – это два файла с одинаковым именем и размером.
-FileOnDisk = namedtuple("FileOnDisk", "name size")
+from collections import defaultdict
 
 
 def find_duplicates(root_path):
@@ -13,7 +9,7 @@ def find_duplicates(root_path):
     for dirpath, _, filenames in os.walk(root_path):
         for filename in filenames:
             filepath = os.path.join(dirpath, filename)
-            file_on_disk = FileOnDisk(filename, os.path.getsize(filepath))
+            file_on_disk = filename, os.path.getsize(filepath)
             filepaths_by_files[file_on_disk].append(filepath)
 
     duplicates = dict(
@@ -26,12 +22,8 @@ def find_duplicates(root_path):
 
 
 def print_duplicates(duplicates):
-    for file_on_disk, filepaths in duplicates.items():
-        print(
-            "File '{}' appears {} times:".format(
-                file_on_disk.name, len(filepaths)
-            )
-        )
+    for (filename, _), filepaths in duplicates.items():
+        print("File '{}' appears {} times:".format(filename, len(filepaths)))
         for filepath in filepaths:
             print("\t{}".format(filepath))
 
